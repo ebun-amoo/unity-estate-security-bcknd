@@ -17,5 +17,8 @@
     "express": "^4.21.2",
     "pg": "^8.14.1",
     "postgres": "^3.4.5"
+  },
+  "devDependencies": {
+    "@vercel/node": "^5.1.14"
   }
 }
