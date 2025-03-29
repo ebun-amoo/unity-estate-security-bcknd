@@ -4,7 +4,7 @@ import supabase from "../config/supabase";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response): Promise<void> => {
-  const { email, password, full_name, role } = req.body;
+  const { first_name, last_name, email, password, role, avatar } = req.body;
 
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
@@ -19,9 +19,11 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
   const { data: userData, error: dbError } = await supabase.from("users").insert([
     {
       user_id: authData.user?.id,
+      first_name,
+      last_name,
       email,
-      full_name,
       role,
+      avatar
     },
   ]);
 

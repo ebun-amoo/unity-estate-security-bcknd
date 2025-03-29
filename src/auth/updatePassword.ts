@@ -4,11 +4,19 @@ import supabase from "../config/supabase";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response): Promise<void> => {
-  const { access_token, new_password } = req.body;
+  const { new_password } = req.body;
+  const authHeader = req.headers.authorization;
 
-  const { data, error } = await supabase.auth.updateUser({
-    password: new_password,
-  });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res.status(401).json({ error: "Unauthorized. Missing access token." });
+    return;
+  }
+
+  const access_token = authHeader.split(" ")[1];
+
+  const { data, error } = await supabase.auth.updateUser(
+    { password: new_password }
+  );
 
   if (error) {
     res.status(400).json({ error: error.message });

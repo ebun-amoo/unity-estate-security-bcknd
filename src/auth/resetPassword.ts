@@ -7,7 +7,7 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
   const { email } = req.body;
 
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://your-frontend-app.com/reset-password", //frontend route
+    redirectTo: "https://your-frontend-app.com/reset-password", // replace with frontend route
   });
 
   if (error) {
