@@ -4,28 +4,32 @@ import supabase from "../config/supabase";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password are required." });
-      return;
-    }
+  const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      res.status(400).json({ error: error.message });
-      return;
-    }
-
-    res.status(200).json({ message: "Login successful!", data });
-  } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+  if (authError) {
+    res.status(400).json({ error: authError.message });
+    return;
   }
+
+  const userId = authData.user?.id;
+
+  const { data: userData, error: dbError } = await supabase
+    .from("users")
+    .select("*")
+    .eq("user_id", userId)
+    .single();
+
+  if (dbError) {
+    res.status(400).json({ error: dbError.message });
+    return;
+  }
+
+  res.json({ message: "Login successful!", user: userData });
 });
 
 export default router;
