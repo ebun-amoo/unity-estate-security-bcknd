@@ -18,7 +18,6 @@ This is the backend for the Unity Estate Security system, built with **Node.js**
 
 ## 📂 Project Structure
 ```
-backend/
 │── src/
 │   ├── config/
 │   │   ├── supabase.ts  # Supabase configuration
