@@ -16,70 +16,73 @@ This is the backend for the Unity Estate Security system, built with **Node.js**
 - **Hosting:** Vercel
 - **Environment Variables:** Managed via Vercel dashboard
 
-## 📂 Project Structure
-```
-│── src/
-│   ├── config/
-│   │   ├── supabase.ts  # Supabase configuration
-│   ├── routes/
-│   │   ├── userRoutes.ts # API routes in progress
-│   ├── server.ts        # Main server file
-│── package.json         # Project dependencies
-│── vercel.json          # Vercel deployment config
-│── tsconfig.json        # TypeScript configuration
-```
-
-## 🏗️ Setup & Installation
-### 1️⃣ Clone the repository
-```sh
-git clone https://github.com/ebun-amoo/unity-estate-security-bcknd.git
-cd unity-estate-security-bcknd
-```
-
-### 2️⃣ Install dependencies
-```sh
-npm install
-```
-
-### 3️⃣ Setup environment variables
-Create a `.env` file in the root directory and add:
-```env
-DATABASE_URL=postgresql://your_user:your_password@your_host:5432/your_database
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-```
-
-### 4️⃣ Run locally
-```sh
-npm run dev
-```
-
-### 5️⃣ Deploy to Vercel
-```sh
-vercel --prod
-```
-
 ## 🚦 Testing the API
 ### **Check database connection**
 ```sh
-curl https://unity-estate-security-bcknd.vercel.app/test
+curl https://unity-estate-security-bcknd.vercel.app/users
 ```
 
 ## 📜 API Endpoints
+
+### **Authentication**
 | Method | Endpoint   | Description             |
 |--------|-----------|-------------------------|
-| GET    | `/test`    | Test database connection |
-| POST   | `/users`   | Create a new user       |
-| GET    | `/users`   | Get all users           |
-(Endpoints still in progress 🚧)
+| POST   | `/signup`    | Create a new user account |
+| POST   | `/login`    | Authenticate a user and return a token |
+| POST   | `/reset-password` | Initiate password reset process |
+| POST   | `/update-password` | Update user password after reset |
 
-## 🛠️ Troubleshooting
-### **1️⃣ Cannot find module '@supabase/supabase-js'**
-Solution: Install Supabase SDK
-```sh
-npm install @supabase/supabase-js
+### **Users**
+| Method | Endpoint   | Description             |
+|--------|-----------|-------------------------|
+| GET    | `/users`   | Get all users           |
+| GET    | `/users/:id`   | Get user profile by ID |
+| GET    | `/profile`   | Get the authenticated user's profile |
+
+### **Setup & Deployment**
+- The backend is now hosted on **Vercel**.
+- Environment variables are managed via **Vercel's env system**.
+- Authentication is handled using **Supabase Auth**.
+- Database queries are performed via **Supabase Client**.
+
+### **Folder Structure**
 ```
+/backend
+│── /src
+│   ├── /auth     # Authentication routes (signup, login, password reset, update password)
+│   │   ├── signup.ts
+│   │   ├── login.ts
+│   │   ├── reset-password.ts
+│   │   ├── update-password.ts
+│   ├── /user     # User-related routes (profile, etc.)
+│   ├── /config
+│   │   ├── supabase.ts    # Supabase client config
+│   ├── server.ts          # Main entry file
+│── package.json
+│── tsconfig.json
+│── .env
+```
+
+### **Getting Started**
+1. Clone the repository
+    ```sh
+    git clone https://github.com/ebun-amoo/unity-estate-security-bcknd.git
+    cd unity-estate-security-bcknd
+    ```
+1. Install dependencies:
+   ```sh
+   npm install
+   ```
+2. Pull environment variables from Vercel:
+   ```sh
+   npm run pull-env
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+(Endpoints & Features still in progress 🚧)
 
 ## 🔗 Useful Links
 - [Supabase Docs](https://supabase.com/docs)
