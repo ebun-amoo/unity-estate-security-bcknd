@@ -5,20 +5,24 @@ import supabase from "../config/supabase";
 const router = Router();
 
 router.get("/", authMiddleware, async (req: Request, res: Response): Promise<void> => {
-  const userId = req.user.id;
+  const userId = req.user.user_id; 
 
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("user_id", userId)
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
 
-  if (error) {
-    res.status(400).json({ error: error.message });
-    return;
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return ;
+    }
+
+    res.json({ user: data });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  res.json({ user: data });
 });
 
 export default router;

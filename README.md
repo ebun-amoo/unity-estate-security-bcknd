@@ -29,8 +29,8 @@ curl https://unity-estate-security-bcknd.vercel.app/users
 |--------|-----------|-------------------------|
 | POST   | `/signup`    | Create a new user account |
 | POST   | `/login`    | Authenticate a user and return a token |
-| POST   | `/reset-password` | Initiate password reset process |
-| POST   | `/update-password` | Update user password after reset |
+| POST   | `/reset_password` | Initiate password reset process |
+| POST   | `/update_password` | Update user password after reset |
 
 ### **Users**
 | Method | Endpoint   | Description             |
@@ -52,8 +52,8 @@ curl https://unity-estate-security-bcknd.vercel.app/users
 │   ├── /auth     # Authentication routes (signup, login, password reset, update password)
 │   │   ├── signup.ts
 │   │   ├── login.ts
-│   │   ├── reset-password.ts
-│   │   ├── update-password.ts
+│   │   ├── resetPassword.ts
+│   │   ├── updatePassword.ts
 │   ├── /user     # User-related routes (profile, etc.)
 │   ├── /config
 │   │   ├── supabase.ts    # Supabase client config
@@ -75,7 +75,7 @@ curl https://unity-estate-security-bcknd.vercel.app/users
    ```
 2. Pull environment variables from Vercel:
    ```sh
-   npm run pull-env
+   npm run pull_env
    ```
 3. Start the development server:
    ```sh
